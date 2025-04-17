@@ -1,129 +1,61 @@
-if game.CoreGui:FindFirstChild("BNHHUB_UI") then
-    game.CoreGui:FindFirstChild("BNHHUB_UI"):Destroy()
+if game.CoreGui:FindFirstChild("BNHHUB_UI") then game.CoreGui.BNHHUB_UI:Destroy() end
+local g = Instance.new("ScreenGui", game.CoreGui) g.Name = "BNHHUB_UI"
+local f = Instance.new("Frame", g) f.Size = UDim2.new(0,500,0,340) f.Position = UDim2.new(0.3,0,0.3,0)
+f.BackgroundColor3 = Color3.fromRGB(30,30,30) f.Active = true f.Draggable = true f.BorderSizePixel = 0
+
+local logo = Instance.new("ImageLabel", f) logo.Size = UDim2.new(0,60,0,60) logo.Position = UDim2.new(0.5,-30,0,0)
+logo.BackgroundTransparency = 1 logo.Image = "rbxassetid://17091306537"
+
+local title = Instance.new("TextLabel", f) title.Size = UDim2.new(1,0,0,40) title.Position = UDim2.new(0,0,0,60)
+title.Text = "BNH HUB" title.BackgroundTransparency = 1 title.TextColor3 = Color3.new(1,1,1)
+title.Font = Enum.Font.GothamBold title.TextScaled = true
+
+local tFrame = Instance.new("Frame", f) tFrame.Size = UDim2.new(0,120,1,-100) tFrame.Position = UDim2.new(0,0,0,100)
+tFrame.BackgroundColor3 = Color3.fromRGB(40,40,40)
+
+local cFrame = Instance.new("Frame", f) cFrame.Size = UDim2.new(1,-130,1,-100)
+cFrame.Position = UDim2.new(0,130,0,100) cFrame.BackgroundColor3 = Color3.fromRGB(20,20,20)
+
+local pages = {}
+local function page(name)
+    local p = Instance.new("Frame", cFrame)
+    p.Size = UDim2.new(1,0,1,0) p.BackgroundTransparency = 1 p.Visible = false
+    pages[name] = p return p
 end
 
-local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
-ScreenGui.Name = "BNHHUB_UI"
-ScreenGui.ResetOnSpawn = false
+local function switch(n) for i,v in pairs(pages) do v.Visible = false end if pages[n] then pages[n].Visible = true end end
 
-local MainFrame = Instance.new("Frame", ScreenGui)
-MainFrame.Size = UDim2.new(0, 500, 0, 350)
-MainFrame.Position = UDim2.new(0.3, 0, 0.2, 0)
-MainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-MainFrame.BorderSizePixel = 0
-MainFrame.Active = true
-MainFrame.Draggable = true
-
-local Logo = Instance.new("ImageLabel", MainFrame)
-Logo.Size = UDim2.new(0, 60, 0, 60)
-Logo.Position = UDim2.new(0.5, -30, 0, 10)
-Logo.Image = "rbxassetid://17091306537"
-Logo.BackgroundTransparency = 1
-
-local Title = Instance.new("TextLabel", MainFrame)
-Title.Size = UDim2.new(1, 0, 0, 40)
-Title.Position = UDim2.new(0, 0, 0, 70)
-Title.Text = "Chuyển Hướng"
-Title.BackgroundTransparency = 1
-Title.TextColor3 = Color3.new(1, 1, 1)
-Title.Font = Enum.Font.GothamBold
-Title.TextScaled = true
-
-local TabHolder = Instance.new("Frame", MainFrame)
-TabHolder.Size = UDim2.new(0, 130, 1, -110)
-TabHolder.Position = UDim2.new(0, 0, 0, 110)
-TabHolder.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-
-local ContentFrame = Instance.new("Frame", MainFrame)
-ContentFrame.Size = UDim2.new(1, -140, 1, -110)
-ContentFrame.Position = UDim2.new(0, 140, 0, 110)
-ContentFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-ContentFrame.Name = "ContentFrame"
-
-local function createPage()
-    local page = Instance.new("Frame", ContentFrame)
-    page.Size = UDim2.new(1, 0, 1, 0)
-    page.BackgroundTransparency = 1
-    page.Visible = false
-    return page
+local function tab(name, y, tgt)
+    local b = Instance.new("TextButton", tFrame)
+    b.Size = UDim2.new(1,0,0,35) b.Position = UDim2.new(0,0,0,y)
+    b.Text = name b.BackgroundColor3 = Color3.fromRGB(50,50,50) b.TextColor3 = Color3.new(1,1,1)
+    b.Font = Enum.Font.Gotham b.TextSize = 14 b.BorderSizePixel = 0
+    b.MouseButton1Click:Connect(function() switch(tgt) end)
 end
 
-local AutoFarmPage = createPage()
-local PremiumPage = createPage()
-local HopServerPage = createPage()
+local af = page("Auto Farm") local pr = page("Premium") local hop = page("Hop Server") af.Visible = true
+tab("Auto Farm", 0, "Auto Farm") tab("Premium", 35, "Premium") tab("Hop Server", 70, "Hop Server")
 
-local function createTab(name, onClick)
-    local btn = Instance.new("TextButton", TabHolder)
-    btn.Size = UDim2.new(1, 0, 0, 35)
-    btn.Text = name
-    btn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-    btn.TextColor3 = Color3.new(1, 1, 1)
-    btn.Font = Enum.Font.Gotham
-    btn.TextSize = 14
-    btn.BorderSizePixel = 0
-    btn.MouseButton1Click:Connect(onClick)
-    return btn
-end
+local l1 = Instance.new("TextLabel", af) l1.Size = UDim2.new(1,0,0,30) l1.Text = "Auto Farm (coming soon)"
+l1.TextColor3 = Color3.new(1,1,1) l1.BackgroundTransparency = 1 l1.Font = Enum.Font.GothamBold l1.TextScaled = true
 
-createTab("Auto Farm", function()
-    AutoFarmPage.Visible = true
-    PremiumPage.Visible = false
-    HopServerPage.Visible = false
-end)
+local l2 = Instance.new("TextLabel", pr) l2.Size = UDim2.new(1,0,0,30) l2.Text = "Premium FREE cho Bình"
+l2.TextColor3 = Color3.fromRGB(255,200,0) l2.BackgroundTransparency = 1 l2.Font = Enum.Font.GothamBold l2.TextScaled = true
 
-createTab("Premium", function()
-    AutoFarmPage.Visible = false
-    PremiumPage.Visible = true
-    HopServerPage.Visible = false
-end)
+local hopBtn = Instance.new("TextButton", hop) hopBtn.Size = UDim2.new(0,180,0,40)
+hopBtn.Position = UDim2.new(0.5,-90,0.3,0) hopBtn.Text = "Hop Server"
+hopBtn.Font = Enum.Font.GothamBold hopBtn.TextSize = 14 hopBtn.TextColor3 = Color3.new(1,1,1)
+hopBtn.BackgroundColor3 = Color3.fromRGB(60,60,60) hopBtn.BorderSizePixel = 0
 
-createTab("Hop Server", function()
-    AutoFarmPage.Visible = false
-    PremiumPage.Visible = false
-    HopServerPage.Visible = true
-end)
-
-AutoFarmPage.Visible = true
-
-local label1 = Instance.new("TextLabel", AutoFarmPage)
-label1.Size = UDim2.new(1, 0, 0, 30)
-label1.Position = UDim2.new(0, 0, 0, 0)
-label1.Text = "Auto Farm (Đang phát triển)"
-label1.TextColor3 = Color3.new(1, 1, 1)
-label1.BackgroundTransparency = 1
-label1.Font = Enum.Font.GothamBold
-label1.TextScaled = true
-
-local label2 = Instance.new("TextLabel", PremiumPage)
-label2.Size = UDim2.new(1, 0, 0, 30)
-label2.Position = UDim2.new(0, 0, 0, 0)
-label2.Text = "🔥"
-label2.TextColor3 = Color3.fromRGB(255, 200, 0)
-label2.BackgroundTransparency = 1
-label2.Font = Enum.Font.GothamBold
-label2.TextScaled = true
-
-local hopBtn = Instance.new("TextButton", HopServerPage)
-hopBtn.Size = UDim2.new(0, 200, 0, 40)
-hopBtn.Position = UDim2.new(0.5, -100, 0, 10)
-hopBtn.Text = "Hop Server"
-hopBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-hopBtn.TextColor3 = Color3.new(1, 1, 1)
-hopBtn.Font = Enum.Font.GothamBold
-hopBtn.TextSize = 14
+local HttpService = game:GetService("HttpService")
+local TeleportService = game:GetService("TeleportService")
 hopBtn.MouseButton1Click:Connect(function()
-    local ts = game:GetService("TeleportService")
-    local player = game.Players.LocalPlayer
-    local HttpService = game:GetService("HttpService")
-    local servers = {}
-    local req = syn and syn.request or http and http.request or http_request or request
-    local body = req({Url="https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=2&limit=100"}).Body
-    for _, v in pairs(HttpService:JSONDecode(body).data) do
-        if v.playing < v.maxPlayers then
-            table.insert(servers, v.id)
-        end
+    local req = (syn and syn.request) or request
+    local r = req({Url="https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=2&limit=100"})
+    local d = HttpService:JSONDecode(r.Body)
+    local s = {}
+    for _,v in pairs(d.data) do
+        if v.playing < v.maxPlayers and v.id ~= game.JobId then table.insert(s, v.id) end
     end
-    if #servers > 0 then
-        ts:TeleportToPlaceInstance(game.PlaceId, servers[math.random(1, #servers)], player)
-    end
-end)
+    if #s > 0 then
+        TeleportService:TeleportToPlaceInstance(game.PlaceId, s[math]
