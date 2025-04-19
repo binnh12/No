@@ -6,7 +6,7 @@ local Window = Fluent:CreateWindow({
     --ai skid thì nhớ đổi tên =)
     --BNH HUB , BNH HUB :>
     Title = "BNH HUB",
-    SubTitle = "Version 1",
+    SubTitle = "Version 1 - Địt mẹ cuộc sống",
     TabWidth = 160,
     Size = UDim2.fromOffset(530, 350),
     Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
